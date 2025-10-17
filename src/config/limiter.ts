@@ -1,10 +1,8 @@
 import rateLimit from "express-rate-limit";
 import { Request, Response } from "express";
-import { ipKeyGenerator } from "express-rate-limit";
 import "express";
 
 // src/types/express.d.ts (or any other global types file)
-
 declare module "express" {
   interface Request {
     clientIp?: string;
@@ -13,16 +11,11 @@ declare module "express" {
 
 // Create the limiter with proper types
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5000, // Limit each IP to 5000 requests per window
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-
-  keyGenerator: (request: Request): string => {
-    // Use the proper IP key generator for IPv6 support
-    return ipKeyGenerator(request);
-  },
-
+  windowMs: 15 * 60 * 1000,
+  max: 5000,
+  standardHeaders: true,
+  legacyHeaders: false,
+  // Remove keyGenerator to use default IP handling
   handler: (req: Request, res: Response) => {
     return res.status(429).json({
       status: "error",
