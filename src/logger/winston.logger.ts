@@ -12,8 +12,8 @@ const levels = {
 
 // This method set the current severity based on NODE_ENV
 const level = () => {
-  const env = process.env.NODE_ENV || "development";
-  const isDevelopment = env === "development";
+  const env = process.env.NODE_ENV || "dev";
+  const isDevelopment = env === "dev";
   return isDevelopment ? "debug" : "info"; // Log info level and up in production files
 };
 
@@ -32,8 +32,8 @@ winston.addColors(colors);
 const logFormat = winston.format.combine(
   winston.format.timestamp({ format: "DD MMM, YYYY - HH:mm:ss:ms" }), // Corrected YYYY
   winston.format.printf(
-    (info) => `[${info.timestamp}] ${info.level}: ${info.message}`
-  )
+    (info) => `[${info.timestamp}] ${info.level}: ${info.message}`,
+  ),
 );
 
 // Format for the console (with colors)
@@ -41,8 +41,8 @@ const consoleFormat = winston.format.combine(
   winston.format.timestamp({ format: "DD MMM, YYYY - HH:mm:ss:ms" }), // Corrected YYYY
   winston.format.colorize({ all: true }),
   winston.format.printf(
-    (info) => `[${info.timestamp}] ${info.level}: ${info.message}`
-  )
+    (info) => `[${info.timestamp}] ${info.level}: ${info.message}`,
+  ),
 );
 
 // Define transports

@@ -3,13 +3,10 @@ import * as path from "path";
 
 // Load environment files in priority order
 const loadEnvFiles = () => {
-  const env = process.env.NODE_ENV || 'development';
+  const env = process.env.NODE_ENV || "dev";
 
   // Priority order: .env.{NODE_ENV}, .env
-  const envFiles = [
-    `.env.${env}`,
-    '.env'
-  ];
+  const envFiles = [`.env.${env}`, ".env"];
 
   for (const envFile of envFiles) {
     try {
@@ -26,7 +23,6 @@ const loadEnvFiles = () => {
 };
 
 loadEnvFiles();
-
 
 // Export the loaded environment variables
 export const env = {

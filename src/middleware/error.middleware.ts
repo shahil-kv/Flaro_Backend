@@ -23,13 +23,13 @@ const errorHandler = (err, req, res, next) => {
     ...(error.errors && Array.isArray(error.errors) && error.errors.length > 0
       ? { errors: error.errors }
       : {}),
-    ...(process.env.NODE_ENV === "development" ? { stack: error.stack } : {}),
+    ...(process.env.NODE_ENV === "dev" ? { stack: error.stack } : {}),
   };
 
   logger.error(
     `${error.statusCode || 500} - ${error.message} - ${req.originalUrl} - ${
       req.method
-    } - ${req.ip}`
+    } - ${req.ip}`,
   );
 
   const finalStatusCode =

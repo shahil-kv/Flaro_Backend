@@ -7,13 +7,13 @@ const stream = {
 };
 
 const skip = () => {
-  const env = process.env.NODE_ENV || "development";
-  return env !== "development";
+  const env = process.env.NODE_ENV || "dev";
+  return env !== "dev";
 };
 
 const morganMiddleware = morgan(
   ":remote-addr :method :url :status - :response-time ms",
-  { stream, skip }
+  { stream, skip },
 );
 
 export default morganMiddleware;
