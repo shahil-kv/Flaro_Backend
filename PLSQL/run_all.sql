@@ -1,0 +1,3 @@
+-- sql/run_all.sql
+-- Initializes the contact_app database schema
+-- Run with: psql -U postgres -d contact_app -f PLSQL/run_all.sql

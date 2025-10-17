@@ -1,0 +1,183 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model call_context {
+  call_sid        String    @id @db.VarChar(64)
+  group_id        Int
+  created_at      DateTime? @default(now()) @db.Timestamp(6)
+  ai_response_url String?   @db.VarChar(1000)
+}
+
+model call_history {
+  id              Int          @id @default(autoincrement())
+  session_id      Int
+  user_id         Int
+  group_id        Int?
+  contact_id      Int?
+  contact_phone   String       @db.VarChar(50)
+  status          String?      @default("pending") @db.VarChar(255)
+  call_sid        String?      @db.VarChar(255)
+  attempt         Int?         @default(1)
+  max_attempts    Int?         @default(2)
+  message_content String?
+  called_at       DateTime?    @db.Timestamp(6)
+  answered_at     DateTime?    @db.Timestamp(6)
+  ended_at        DateTime?    @db.Timestamp(6)
+  duration        Int?
+  error_message   String?
+  created_at      DateTime?    @default(now()) @db.Timestamp(6)
+  updated_at      DateTime     @db.Timestamp(6)
+  current_step    Json?        @default("{}") @db.Json
+  transcription   String?      @db.VarChar(400000)
+  contacts        contacts?    @relation(fields: [contact_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  groups          groups?      @relation(fields: [group_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  call_session    call_session @relation(fields: [session_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users           users        @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([call_sid], map: "call_sid")
+  @@index([contact_id], map: "contact_id")
+  @@index([call_sid], map: "idx_call_history_call_sid")
+  @@index([contact_id], map: "idx_call_history_contact_id")
+  @@index([session_id], map: "idx_call_history_session_id")
+  @@index([user_id], map: "idx_call_history_user_id")
+  @@index([session_id], map: "session_id")
+  @@index([user_id], map: "user_id")
+}
+
+model call_session {
+  id                Int            @id @default(autoincrement())
+  user_id           Int
+  group_id          Int?
+  contacts          Json           @db.Json
+  current_index     Int?           @default(0)
+  status            String?        @default("in_progress") @db.VarChar(255)
+  total_calls       Int?           @default(0)
+  successful_calls  Int?           @default(0)
+  failed_calls      Int?           @default(0)
+  created_at        DateTime?      @default(now()) @db.Timestamp(6)
+  updated_at        DateTime?      @default(now()) @db.Timestamp(6)
+  workflow_snapshot Json?          @db.Json
+  call_history      call_history[]
+  groups            groups?        @relation(fields: [group_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users             users          @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([group_id], map: "group_id")
+  @@index([group_id], map: "idx_call_session_group_id")
+  @@index([user_id], map: "idx_call_session_user_id")
+}
+
+model contacts {
+  id                     Int            @id @default(autoincrement())
+  group_id               Int
+  contact_id             String?        @db.VarChar(255)
+  name                   String         @db.VarChar(255)
+  first_name             String?        @db.VarChar(255)
+  last_name              String?        @db.VarChar(255)
+  phone_number           String         @db.VarChar(50)
+  country_code           String?        @db.VarChar(10)
+  raw_contact            Json?          @db.Json
+  created_at             DateTime?      @default(now()) @db.Timestamp(6)
+  updated_at             DateTime?      @default(now()) @db.Timestamp(6)
+  is_contact_from_device Boolean?       @default(true)
+  call_history           call_history[]
+  groups                 groups         @relation(fields: [group_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([group_id], map: "idx_contacts_group_id")
+  @@index([phone_number], map: "idx_contacts_phone_number")
+}
+
+model documents {
+  id             Int       @id @default(autoincrement())
+  workflow_id    Int
+  file_name      String
+  file_path      String
+  status         String
+  created_at     DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime? @default(now()) @db.Timestamptz(6)
+  pinecone_ns    String?
+  extracted_text String?
+  workflows      workflows @relation(fields: [workflow_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([workflow_id], map: "idx_documents_workflow_id")
+}
+
+model groups {
+  id           Int            @id @default(autoincrement())
+  user_id      Int
+  group_name   String         @db.VarChar(255)
+  description  String?
+  group_type   String?        @default("USER_DEFINED") @db.VarChar(20)
+  created_at   DateTime?      @default(now()) @db.Timestamp(6)
+  updated_at   DateTime?      @default(now()) @db.Timestamp(6)
+  workflow_id  Int?
+  call_history call_history[]
+  call_session call_session[]
+  contacts     contacts[]
+  workflows    workflows?     @relation(fields: [workflow_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_workflow")
+  users        users          @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([user_id, group_name], map: "unique_group_name_per_user")
+  @@index([user_id], map: "idx_groups_user_id")
+}
+
+model pending_registrations {
+  id                        Int       @id @default(autoincrement())
+  phone_number              String    @unique @db.VarChar(15)
+  password_hash             String    @db.VarChar(255)
+  full_name                 String    @db.VarChar(255)
+  email                     String?   @db.VarChar(255)
+  role                      String?   @default("USER") @db.VarChar(200)
+  phone_verification_otp    String    @db.VarChar(10)
+  phone_verification_expiry DateTime  @db.Timestamp(6)
+  created_at                DateTime? @default(now()) @db.Timestamptz(6)
+}
+
+model refresh_tokens {
+  id         Int       @id @default(autoincrement())
+  user_id    Int
+  token      String    @unique @db.VarChar(255)
+  expires_at DateTime  @db.Timestamptz(6)
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at DateTime? @default(now()) @db.Timestamptz(6)
+  users      users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([user_id], map: "idx_refresh_tokens_user_id")
+}
+
+model users {
+  id                Int              @id @default(autoincrement())
+  phone_number      String           @unique @db.VarChar(15)
+  password_hash     String           @db.VarChar(255)
+  full_name         String           @db.VarChar(255)
+  email             String?          @unique @db.VarChar(255)
+  is_phone_verified Boolean?         @default(false)
+  is_premium        Boolean?         @default(false)
+  premium_expiry    DateTime?        @db.Timestamptz(6)
+  role              String?          @default("USER") @db.VarChar(20)
+  created_at        DateTime?        @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime?        @default(now()) @db.Timestamptz(6)
+  call_history      call_history[]
+  call_session      call_session[]
+  groups            groups[]
+  refresh_tokens    refresh_tokens[]
+
+  @@index([email], map: "idx_users_email")
+  @@index([phone_number], map: "idx_users_phone_number")
+}
+
+model workflows {
+  id          Int         @id @default(autoincrement())
+  name        String      @db.VarChar(255)
+  description String?
+  steps       Json        @db.Json
+  created_at  DateTime?   @default(now()) @db.Timestamp(6)
+  updated_at  DateTime?   @default(now()) @db.Timestamp(6)
+  documents   documents[]
+  groups      groups[]
+}

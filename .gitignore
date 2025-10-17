@@ -1,0 +1,9 @@
+node_modules
+.env
+.env.prod
+.env.uat
+.env.dev
+src/generated/
+logs/
+PLSQL/.DS_Store
+.DS_Store
