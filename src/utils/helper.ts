@@ -1,5 +1,5 @@
 import fs from "fs";
-import logger from "../logger/winston.logger";
+import logger from "../logger/winston.logger.js";
 import { Request } from "express";
 
 export const filterObjectKeys = (fieldsArray: string[], objectArray) => {

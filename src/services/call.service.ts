@@ -1,9 +1,9 @@
 // Initiate next call
 // import { ApiResponse } from '../utils/ApiResponse';
 import { Request } from 'express';
-import prisma from "../lib/prisma";
-import { CallStatusEnum, SessionStatusEnum } from '../constant';
-import { WorkflowStep } from './workflow.service';
+import prisma from "../lib/prisma.js";
+import { CallStatusEnum, SessionStatusEnum } from '../constant.js';
+import { WorkflowStep } from './workflow.service.js';
 import twilio from 'twilio';
 
 // Initialize Twilio client

@@ -1,4 +1,4 @@
-import { WorkflowStep } from '../types/call.types';
+import { WorkflowStep } from '../types/call.types.js';
 
 export function createSystemPrompt(workflow: WorkflowStep[]): string {
     if (workflow.length === 0) {

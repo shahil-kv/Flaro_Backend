@@ -1,8 +1,7 @@
-import { httpServer } from './app';
-import { logger } from './utils/logger'
-import { env } from './config/env';
-import { AudioProcessor } from './voice/streaming/audioProcessor';
-
+import { httpServer } from "./app.js";
+import { logger } from "./utils/logger.js";
+import { env } from "./config/env.js";
+import { AudioProcessor } from "./voice/streaming/audioProcessor.js";
 // dotenv.config() is called in app.ts, no need to call it again here
 
 const PORT = env.PORT;
@@ -12,7 +11,7 @@ const startServer = async () => {
   // Initialize the audio processor
   await AudioProcessor.initialize();
 
-  httpServer.listen(Number(PORT), '0.0.0.0', () => {
+  httpServer.listen(Number(PORT), "0.0.0.0", () => {
     // Store the server instances
     logger.success(`✅ Server is running at: ${BASE_URL}:${PORT}`);
   });
@@ -21,20 +20,20 @@ const startServer = async () => {
 startServer();
 
 // Graceful shutdown
-process.on('SIGINT', async () => {
-  logger.log('SIGINT signal received: closing HTTP server');
+process.on("SIGINT", async () => {
+  logger.log("SIGINT signal received: closing HTTP server");
   AudioProcessor.destroy();
   httpServer.close(() => {
-    logger.log('HTTP server closed');
+    logger.log("HTTP server closed");
     process.exit(0);
   });
 });
 
-process.on('SIGTERM', async () => {
-  logger.log('SIGTERM signal received: closing HTTP server');
+process.on("SIGTERM", async () => {
+  logger.log("SIGTERM signal received: closing HTTP server");
   AudioProcessor.destroy();
   httpServer.close(() => {
-    logger.log('HTTP server closed');
+    logger.log("HTTP server closed");
     process.exit(0);
   });
 });

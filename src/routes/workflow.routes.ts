@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   manageWorkflow,
   getWorkflows,
-} from "../controllers/workflow.controller";
+} from "../controllers/workflow.controller.js";
 
 const router = Router();
 

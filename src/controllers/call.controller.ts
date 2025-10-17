@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import prisma from "../lib/prisma";
-import { asyncHandler } from '../utils/asyncHandler';
-import { ApiResponse } from '../utils/ApiResponse';
-import { CallStatusEnum, SessionStatusEnum } from '../constant';
-import { initiateNextCall } from '../services/call.service';
-import { getWorkflowStepsByGroupId } from '../services/workflow.service';
+import prisma from "../lib/prisma.js";
+import { asyncHandler } from '../utils/asyncHandler.js';
+import { ApiResponse } from '../utils/ApiResponse.js';
+import { CallStatusEnum, SessionStatusEnum } from '../constant.js';
+import { initiateNextCall } from '../services/call.service.js';
+import { getWorkflowStepsByGroupId } from '../services/workflow.service.js';
 import twilio from 'twilio';
 
 // Initialize Twilio client

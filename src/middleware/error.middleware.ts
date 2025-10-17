@@ -1,5 +1,5 @@
-import { ApiError } from "../utils/ApiError";
-import logger from "../logger/winston.logger"; // Ensure Winston logger is imported
+import { ApiError } from "../utils/ApiError.js";
+import logger from "../logger/winston.logger.js"; // Ensure Winston logger is imported
 
 /**
  * Error handling middleware. MUST have 4 arguments.

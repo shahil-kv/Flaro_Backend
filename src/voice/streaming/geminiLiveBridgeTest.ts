@@ -1,7 +1,7 @@
-import { GeminiLiveService } from '../../ai/geminiLive.service';
-import { GeminiLiveBridge } from './geminiLiveBridge';
-import { logger } from '../../utils/logger';
-import { AudioProcessor } from './audioProcessor';
+import { GeminiLiveService } from '../../ai/geminiLive.service.js';
+import { GeminiLiveBridge } from './geminiLiveBridge.js';
+import { logger } from '../../utils/logger.js';
+import { AudioProcessor } from './audioProcessor.js';
 import WebSocket from 'ws';
 
 // Mock WebSocket that just logs messages

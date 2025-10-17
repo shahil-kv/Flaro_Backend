@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { ApiResponse } from "../utils/ApiResponse";
-import { asyncHandler } from "../utils/asyncHandler";
-import prisma from "../lib/prisma";
-import { OpsModeEnum } from "../constant";
+import { ApiResponse } from "../utils/ApiResponse.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import prisma from "../lib/prisma.js";
+import { OpsModeEnum } from "../constant.js";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 // Utility to normalize phone numbers

@@ -1,8 +1,8 @@
 // Voice Controller for Gemini Live Streaming - Malayalam Focus
 import { Request, Response } from 'express';
-import { logger } from '../utils/logger';
-import { env } from '../config/env';
-import prisma from '../lib/prisma';
+import { logger } from '../utils/logger.js';
+import { env } from '../config/env.js';
+import prisma from '../lib/prisma.js';
 
 export const voiceHandler = async (req: Request, res: Response) => {
   try {

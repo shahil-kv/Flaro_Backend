@@ -1,11 +1,11 @@
 import { WebSocket, WebSocketServer } from 'ws';
-import { logger } from '../utils/logger';
-import { GeminiLiveService } from '../ai/geminiLive.service';
-import { GeminiLiveBridge } from '../voice/streaming/geminiLiveBridge';
+import { logger } from '../utils/logger.js';
+import { GeminiLiveService } from '../ai/geminiLive.service.js';
+import { GeminiLiveBridge } from '../voice/streaming/geminiLiveBridge.js';
 import { Server } from 'http';
-import prisma from '../lib/prisma';
-import { createSystemPrompt } from '../services/prompt.service';
-import { getWorkflowStepsByGroupId } from '../services/workflow.service';
+import prisma from '../lib/prisma.js';
+import { createSystemPrompt } from '../services/prompt.service.js';
+import { getWorkflowStepsByGroupId } from '../services/workflow.service.js';
 
 export class TwilioStreamManager {
     private wss: WebSocketServer;

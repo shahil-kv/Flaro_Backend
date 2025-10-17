@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "node",
+    "module": "nodenext",
     "outDir": "dist",
     "rootDir": "src",
     "esModuleInterop": true,
@@ -10,8 +9,8 @@
     "skipLibCheck": true,
     "strict": false,
     "noImplicitAny": false,
+    "moduleResolution": "nodenext",
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
     "types": [
       "node"
     ],

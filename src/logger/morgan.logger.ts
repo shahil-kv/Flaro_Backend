@@ -1,5 +1,5 @@
 import morgan from "morgan";
-import logger from "./winston.logger";
+import logger from "./winston.logger.js";
 
 const stream = {
   // Use the http severity

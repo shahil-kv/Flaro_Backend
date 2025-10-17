@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import prisma from "../lib/prisma";
-import { ApiResponse } from '../utils/ApiResponse';
-import { asyncHandler } from '../utils/asyncHandler';
+import prisma from "../lib/prisma.js";
+import { ApiResponse } from '../utils/ApiResponse.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 
 const GetDashboard = asyncHandler(async (req: Request, res: Response) => {
     const { userId } = req.body;

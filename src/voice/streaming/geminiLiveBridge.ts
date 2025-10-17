@@ -1,8 +1,8 @@
-import { GeminiLiveService, GeminiSessionCallbacks } from '../../ai/geminiLive.service';
-import { logger } from '../../utils/logger';
+import { GeminiLiveService, GeminiSessionCallbacks } from '../../ai/geminiLive.service.js';
+import { logger } from '../../utils/logger.js';
 import { WebSocket } from 'ws';
-import { AudioProcessor } from './audioProcessor';
-import { WorkflowStep } from '../../types/call.types';
+import { AudioProcessor } from './audioProcessor.js';
+import { WorkflowStep } from '../../types/call.types.js';
 
 enum CallState {
   CREATED,

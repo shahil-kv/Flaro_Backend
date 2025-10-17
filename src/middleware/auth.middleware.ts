@@ -1,9 +1,9 @@
 // import { AvailableUserRoles } from '../constant';
-import { ApiError } from "../utils/ApiError";
-import { asyncHandler } from "../utils/asyncHandler";
+import { ApiError } from "../utils/ApiError.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import prisma from "../lib/prisma";
+import prisma from "../lib/prisma.js";
 
 if (!process.env.JWT_ACCESS_SECRET) {
   throw new Error("JWT access secret is not configured");

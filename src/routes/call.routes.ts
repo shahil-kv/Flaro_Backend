@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { validate } from '../validators/validate';
-import { startCalls, stopSession, getCallHistory } from '../controllers/call.controller';
+import { validate } from '../validators/validate.js';
+import { startCalls, stopSession, getCallHistory } from '../controllers/call.controller.js';
 
-import { voiceHandler } from '../controllers/voice.controller';
-import { callStatusHandler } from '../controllers/status.controller';
+import { voiceHandler } from '../controllers/voice.controller.js';
+import { callStatusHandler } from '../controllers/status.controller.js';
 
 const router = Router();
 

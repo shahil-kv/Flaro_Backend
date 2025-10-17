@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import AuthService from "../services/auth.service";
-import { ApiError } from "../utils/ApiError";
-import { ApiResponse } from "../utils/ApiResponse";
-import { asyncHandler } from "../utils/asyncHandler";
+import AuthService from "../services/auth.service.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 export const registerUser = asyncHandler(
   async (req: Request, res: Response) => {

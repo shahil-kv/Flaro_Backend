@@ -1,11 +1,11 @@
 // Handle call status updates
-import { asyncHandler } from '../utils/asyncHandler';
+import { asyncHandler } from '../utils/asyncHandler.js';
 // import { ApiResponse } from '../utils/ApiResponse';
 import { Request, Response } from 'express';
-import { CallStatusEnum, SessionStatusEnum } from '../constant';
-import prisma from "../lib/prisma";
-import { initiateNextCall } from '../services/call.service';
-import { getWorkflowStepsByGroupId } from '../services/workflow.service';
+import { CallStatusEnum, SessionStatusEnum } from '../constant.js';
+import prisma from "../lib/prisma.js";
+import { initiateNextCall } from '../services/call.service.js';
+import { getWorkflowStepsByGroupId } from '../services/workflow.service.js';
 
 
 const callStatusHandler = asyncHandler(async (req: Request, res: Response) => {

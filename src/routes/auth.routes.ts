@@ -7,10 +7,10 @@ import {
     registerUser,
     upgradeToPremium,
     verifyPhoneNumber,
-} from '../controllers/auth.controller';
-import { validateRegisterUser, validateVerifyPhoneNumber, validateLoginUser, validateUpgradeToPremium } from '../validators/user.validators';
-import { verifyJWT, verifyRole } from '../middleware/auth.middleware';
-import { validate } from '../validators/validate';
+} from '../controllers/auth.controller.js';
+import { validateRegisterUser, validateVerifyPhoneNumber, validateLoginUser, validateUpgradeToPremium } from '../validators/user.validators.js';
+import { verifyJWT, verifyRole } from '../middleware/auth.middleware.js';
+import { validate } from '../validators/validate.js';
 
 const authRouter = Router();
 

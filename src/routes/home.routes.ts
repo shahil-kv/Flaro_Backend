@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { validate } from '../validators/validate';
-import { GetDashboard } from '../controllers/home.controller';
+import { validate } from '../validators/validate.js';
+import { GetDashboard } from '../controllers/home.controller.js';
 
 const router = Router();
 
