@@ -1,6 +1,5 @@
 import alawmulaw from "alawmulaw";
-import { logger } from "../../utils/logger";
-// import { logger } from "../../utils/logger.js";
+import { logger } from "../../utils/logger.js";
 import libsamplerate from "@alexanderolsen/libsamplerate-js";
 const { create, ConverterType } = libsamplerate;
 
